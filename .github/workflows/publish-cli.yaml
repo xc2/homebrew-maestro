@@ -36,9 +36,13 @@ jobs:
               s/repoOwner\.set("mobile-dev-inc")/repoOwner.set("xc2")/
               s/name\.set("maestro")/name.set("maestro")/
             }' maestro-cli/build.gradle.kts
-          sed -i '/repoTap\s*{/,/dependencies\s*{/ {
+          sed -i '/brew\s*{/,/dependencies\s*{/ {
+              s/formulaName\.set("Maestro")/formulaName.set("maestro-fork")/
               s/repoOwner\.set("mobile-dev-inc")/repoOwner.set("xc2")/
               s/name\.set("homebrew-tap")/name.set("homebrew-maestro")/
+            }' maestro-cli/build.gradle.kts
+          sed -i '/executable\s*{/,/}/ {
+              s/name\.set("maestro")/name.set("maestro-fork")/
             }' maestro-cli/build.gradle.kts
           cat maestro-cli/gradle.properties
           cat maestro-cli/build.gradle.kts
@@ -46,7 +50,7 @@ jobs:
       - name: Publish CLI
         run: ./gradlew :maestro-cli:jreleaserFullRelease --no-daemon --no-parallel
         env:
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
 
       - name: Print jReleaser log
         if: always()
