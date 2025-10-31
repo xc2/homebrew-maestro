@@ -23,6 +23,22 @@ jobs:
           distribution: zulu
           java-version: 17
           cache: gradle
+      - name: Setup version
+        id: versions
+        run: echo "suffix=fork$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+      - name: Update Release Info
+        run: |
+          sed -i '' 's/^\(CLI_VERSION=.*\)$/\1-${{ steps.versions.outputs.suffix }}/' maestro-cli/gradle.properties
+          sed -i '' '/release\s*{/,/changelog\s*{/ {
+              s/repoOwner\.set("mobile-dev-inc")/repoOwner.set("xc2")/
+              s/name\.set("maestro")/name.set("homebrew-maestro")/
+            }' maestro-cli/build.gradle.kts
+          sed -i '' '/repoTap\s*{/,/dependencies\s*{/ {
+              s/repoOwner\.set("mobile-dev-inc")/repoOwner.set("xc2")/
+              s/name\.set("homebrew-tap")/name.set("homebrew-maestro")/
+            }' maestro-cli/build.gradle.kts
+          cat maestro-cli/gradle.properties
+          cat maestro-cli/build.gradle.kts
 
       - name: Publish CLI
         run: ./gradlew :maestro-cli:jreleaserFullRelease --no-daemon --no-parallel
