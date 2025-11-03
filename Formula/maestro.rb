@@ -1,11 +1,11 @@
-# Generated with JReleaser 1.13.1 at 2025-11-03T10:27:28.94424077Z
+# Generated with JReleaser 1.13.1 at 2025-11-03T11:35:33.091213916Z
 
 class Maestro < Formula
   desc "The easiest way to automate UI testing for your mobile app"
   homepage "https://maestro.mobile.dev"
-  url "https://github.com/xc2/maestro/releases/download/cli-2.0.8-fork20251103102714/maestro.zip"
-  version "2.0.8-fork20251103102714"
-  sha256 "1910d291f6625585d5e0f6f411b985b9a1f32baa19fa353ba4cbdea0ec4a4d88"
+  url "https://github.com/xc2/maestro/releases/download/cli-2.0.8-fork20251103113519/maestro.zip"
+  version "2.0.8-fork20251103113519"
+  sha256 "64c382897e9e473d34377d93cfac0ec15800bd12c9b824c8fbacdf3d5b63c628"
   license "Apache-2.0"
 
   depends_on "openjdk" => "17+"
@@ -17,6 +17,6 @@ class Maestro < Formula
 
   test do
     output = shell_output("#{bin}/maestro-fork --version")
-    assert_match "2.0.8-fork20251103102714", output
+    assert_match "2.0.8-fork20251103113519", output
   end
 end
